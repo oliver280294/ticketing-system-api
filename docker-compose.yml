@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  postgres_db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: ticketdb
+    ports:
+      - "5432:5432"
+
+  node_app:
+    build: .
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      - postgres_db
+    ports:
+      - "3000:3000"
